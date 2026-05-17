@@ -902,7 +902,7 @@ export default async function SetupPage() {
     tokenize(classnameHelperTS, "typescript"),
   ]);
   return (
-    <div className="flex flex-col max-w-4xl mx-auto w-full border-x border-grayscale-3 dark:border-grayscale-2 p-2 md:p-6 lg:p-14">
+    <div className="flex flex-col max-w-4xl mx-auto w-full border-x border-grayscale-3 dark:border-grayscale-2 p-4 md:p-8 lg:p-16">
       <div className="flex flex-col p-2">
         <div className="flex flex-col p-2">
           <h2 className="font-medium text-grayscale-11">Setup</h2>
