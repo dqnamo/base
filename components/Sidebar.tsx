@@ -30,17 +30,6 @@ function SidebarNavContent({ onNavigate }: { onNavigate?: () => void }) {
       >
         Home
       </Link>
-      <Link
-        href="/setup"
-        onClick={onNavigate}
-        className={cn(
-          "uppercase hover:text-grayscale-11 transition-colors duration-200 font-semibold text-xs font-mono text-grayscale-9 px-2 py-1",
-          pathname === "/setup" ? "text-grayscale-11" : "text-grayscale-9",
-        )}
-      >
-        Setup
-      </Link>
-
       <div className="mt-4 flex flex-col gap-px border-t border-grayscale-3 pt-4 dark:border-grayscale-2">
         <a
           href={GITHUB_REPO_URL}
