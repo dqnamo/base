@@ -2,6 +2,7 @@ import {
   GitForkIcon,
   GithubLogoIcon,
   HexagonIcon,
+  MusicNotesSimpleIcon,
   TriangleIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
@@ -28,7 +29,7 @@ const STACK_ITEMS = [
   },
   {
     name: "Chord",
-    logo: "/logos/chord.png",
+    Icon: MusicNotesSimpleIcon,
     description:
       "Local UI layer with Radix color tokens, Base UI primitives, and copy-paste components.",
   },
@@ -127,28 +128,48 @@ export default function Home() {
         </div>
 
         <div className="mt-4 grid w-full grid-cols-1 gap-1.5 rounded-xl border border-grayscale-3 bg-grayscale-2 p-1.5 sm:grid-cols-2 lg:grid-cols-3">
-          {STACK_ITEMS.map((item) => (
-            <div
-              className="small-shadow min-w-0 rounded-lg border border-grayscale-3 bg-grayscale-1 p-5"
-              key={item.name}
-            >
-              <Image
-                alt={`${item.name} logo`}
-                className={cn("w-6", item.logoClassName ?? "")}
-                height={32}
-                src={item.logo}
-                width={32}
-              />
-              <div className="mt-3 flex min-w-0 flex-col gap-px">
-                <p className="text-sm font-medium text-grayscale-11">
-                  {item.name}
-                </p>
-                <p className="text-balance text-xs text-grayscale-10">
-                  {item.description}
-                </p>
+          {STACK_ITEMS.map((item) => {
+            const StackIcon = "Icon" in item ? item.Icon : null;
+            const logo = "logo" in item ? item.logo : null;
+            const logoClassName =
+              "logoClassName" in item ? item.logoClassName : undefined;
+
+            return (
+              <div
+                className="small-shadow min-w-0 rounded-lg border border-grayscale-3 bg-grayscale-1 p-5"
+                key={item.name}
+              >
+                {StackIcon ? (
+                  <div className="flex aspect-square w-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-grayscale-3 bg-grayscale-1 dark:border-grayscale-4 dark:bg-grayscale-3">
+                    <StackIcon
+                      aria-label={`${item.name} logo`}
+                      className="text-grayscale-12"
+                      size={24}
+                      weight="fill"
+                    />
+                  </div>
+                ) : logo ? (
+                  <Image
+                    alt={`${item.name} logo`}
+                    className={cn("w-6", logoClassName ?? "")}
+                    height={32}
+                    src={logo}
+                    width={32}
+                  />
+                ) : (
+                  <div className="size-8" />
+                )}
+                <div className="mt-3 flex min-w-0 flex-col gap-px">
+                  <p className="text-sm font-medium text-grayscale-11">
+                    {item.name}
+                  </p>
+                  <p className="text-balance text-xs text-grayscale-10">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <Footer className="p-2 mt-8" />

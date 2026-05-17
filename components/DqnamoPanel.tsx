@@ -13,13 +13,27 @@ type Position = {
 
 const EDGE_GAP = 16;
 const STORAGE_KEY = "dynamo-panel-corner";
-const DEFAULT_CORNER: Corner = "bottom-left";
+const DEFAULT_CORNER: Corner = "top-left";
+const XL_BREAKPOINT_QUERY = "(min-width: 80rem)";
+
+function isXlViewport() {
+  return window.matchMedia(XL_BREAKPOINT_QUERY).matches;
+}
+
+function getResponsiveCorner(corner: Corner): Corner {
+  if (corner === "top-left" && !isXlViewport()) {
+    return "bottom-left";
+  }
+
+  return corner;
+}
 
 function getCornerPosition(corner: Corner, width: number, height: number) {
-  const x = corner.endsWith("left")
+  const responsiveCorner = getResponsiveCorner(corner);
+  const x = responsiveCorner.endsWith("left")
     ? EDGE_GAP
     : window.innerWidth - width - EDGE_GAP;
-  const y = corner.startsWith("top")
+  const y = responsiveCorner.startsWith("top")
     ? EDGE_GAP
     : window.innerHeight - height - EDGE_GAP;
 
@@ -132,9 +146,10 @@ export function DqnamoPanel() {
     const height = panel.offsetHeight;
     const storedCorner = getStoredCorner();
     const storedPosition = getCornerPosition(storedCorner, width, height);
+    const responsiveCorner = getResponsiveCorner(storedCorner);
 
     setCorner(storedCorner);
-    setIsRightAligned(storedCorner.endsWith("right"));
+    setIsRightAligned(responsiveCorner.endsWith("right"));
     updatePosition(storedPosition);
     setHasMeasured(true);
   }, [updatePosition]);
@@ -152,15 +167,16 @@ export function DqnamoPanel() {
         panel.offsetWidth,
         panel.offsetHeight,
       );
+      const responsiveCorner = getResponsiveCorner(corner);
 
       updatePosition(nextPosition);
-      updateAlignment(nextPosition, panel.offsetWidth);
+      setIsRightAligned(responsiveCorner.endsWith("right"));
     }
 
     window.addEventListener("resize", snapCurrentCorner);
 
     return () => window.removeEventListener("resize", snapCurrentCorner);
-  }, [corner, updateAlignment, updatePosition]);
+  }, [corner, updatePosition]);
 
   function handlePointerDown(event: React.PointerEvent<HTMLElement>) {
     if (event.button !== 0 || isInteractiveElement(event.target)) {
@@ -217,11 +233,12 @@ export function DqnamoPanel() {
       panel.offsetWidth,
       panel.offsetHeight,
     );
+    const responsiveCorner = getResponsiveCorner(nextCorner);
 
     dragStartRef.current = null;
     setIsDragging(false);
     setCorner(nextCorner);
-    setIsRightAligned(nextCorner.endsWith("right"));
+    setIsRightAligned(responsiveCorner.endsWith("right"));
     updatePosition(nextPosition);
     window.localStorage.setItem(STORAGE_KEY, nextCorner);
     event.currentTarget.releasePointerCapture(event.pointerId);
