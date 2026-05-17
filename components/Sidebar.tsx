@@ -1,10 +1,19 @@
 "use client";
 
-import { SparkleIcon } from "@phosphor-icons/react/dist/ssr";
+import {
+  GitForkIcon,
+  GithubLogoIcon,
+  TriangleIcon,
+} from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/helpers/classname-helper";
+
+const GITHUB_REPO_URL = "https://github.com/dqnamo/base";
+const VERCEL_DEPLOY_URL = `https://vercel.com/new/clone?repository-url=${encodeURIComponent(
+  GITHUB_REPO_URL,
+)}`;
 
 function SidebarNavContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
@@ -31,40 +40,43 @@ function SidebarNavContent({ onNavigate }: { onNavigate?: () => void }) {
       >
         Setup
       </Link>
-      <Link
-        href="/#components"
-        onClick={onNavigate}
-        className={cn(
-          "uppercase hover:text-grayscale-10 flex flex-row items-center gap-2 transition-colors duration-200 font-semibold text-xs font-mono text-grayscale-9 px-2 py-1",
-          pathname.includes("#components")
-            ? "text-grayscale-11"
-            : "text-grayscale-9",
-        )}
-      >
-        Components
-        <div className="flex flex-row items-center gap-1 text-grayscale-9 ">
-          <SparkleIcon size={12} weight="fill" className="text-green-9" />
-          <span className="text-tiny font-mono tracking-normal">New</span>
-        </div>
-      </Link>
-      <Link
-        href="/"
-        onClick={onNavigate}
-        className={cn(
-          "uppercase hover:text-grayscale-10 flex flex-col transition-colors duration-200 font-semibold text-xs font-mono text-grayscale-9 px-2 py-1",
-          pathname.includes("#components")
-            ? "text-grayscale-11"
-            : "text-grayscale-8",
-        )}
-      >
-        Skills
-        <div className="flex flex-row items-center gap-1 text-grayscale-8 ">
-          {/* <HourglassIcon size={12} weight="bold" className="text-orange-9" /> */}
-          <span className="text-tiny font-mono tracking-normal">
-            Coming Soon
-          </span>
-        </div>
-      </Link>
+
+      <div className="mt-4 flex flex-col gap-px border-t border-grayscale-3 pt-4 dark:border-grayscale-2">
+        <a
+          href={GITHUB_REPO_URL}
+          onClick={onNavigate}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-2 py-1 font-mono text-xs font-semibold text-grayscale-9 uppercase transition-colors duration-200 hover:text-grayscale-11"
+        >
+          <GithubLogoIcon size={14} weight="bold" />
+          GitHub
+        </a>
+        <a
+          href={VERCEL_DEPLOY_URL}
+          onClick={onNavigate}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-2 py-1 font-mono text-xs font-semibold text-grayscale-9 uppercase transition-colors duration-200 hover:text-grayscale-11"
+        >
+          <TriangleIcon
+            size={14}
+            weight="fill"
+            className="text-black dark:text-white"
+          />
+          Deploy
+        </a>
+        <a
+          href={GITHUB_REPO_URL}
+          onClick={onNavigate}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-2 py-1 font-mono text-xs font-semibold text-grayscale-9 uppercase transition-colors duration-200 hover:text-grayscale-11"
+        >
+          <GitForkIcon size={14} weight="bold" />
+          Clone Repo
+        </a>
+      </div>
 
       <div className="flex flex-col mt-8 px-2">
         <div className="flex flex-row items-center gap-2">
@@ -73,21 +85,6 @@ function SidebarNavContent({ onNavigate }: { onNavigate?: () => void }) {
           </span>
           <ThemeToggle />
         </div>
-      </div>
-
-      <div className="flex flex-col mt-auto px-2">
-        <p className="text-xs text-grayscale-9">
-          Made with 💛 in{" "}
-          <span className="font-medium text-grayscale-9">London</span> by{" "}
-        </p>
-        <a
-          href="https://dqnamo.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-max font-medium text-lg text-grayscale-9 hover:text-grayscale-11 transition-colors duration-200 font-pirata"
-        >
-          dqnamo
-        </a>
       </div>
     </>
   );

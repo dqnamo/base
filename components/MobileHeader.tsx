@@ -47,7 +47,7 @@ export default function MobileHeader() {
             <Dialog.Title className="sr-only">Navigation</Dialog.Title>
             <div className="flex items-center gap-2 font-mono text-sm font-bold uppercase text-grayscale-12">
               <Logo />
-              dqnamo
+              Base
             </div>
             <Dialog.Close
               aria-label="Close navigation"
