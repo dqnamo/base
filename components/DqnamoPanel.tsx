@@ -266,8 +266,15 @@ export function DqnamoPanel() {
           isRightAligned ? "items-end text-right" : "items-start text-left",
         )}
       >
-        <h1 className="font-pirata font-bold text-grayscale-11 text-xl">
-          dqnamo
+        <h1 className="font-pirata font-bold text-xl">
+          <a
+            className="text-grayscale-11 transition-colors duration-200 hover:text-grayscale-12"
+            href="https://dqnamo.com"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            dqnamo
+          </a>
         </h1>
         <div
           className={cn(
